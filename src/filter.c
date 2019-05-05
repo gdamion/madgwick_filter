@@ -7,15 +7,15 @@ int main()
 	_Bool start = 1;
 	char **col;
 
-    fd_x = open("data/move.txt", O_CREAT);
-    close(fd_x);
-    chmod("data/move.txt", S_IWUSR|S_IWGRP|S_IRUSR|S_IRGRP|S_IROTH|S_IWOTH);
-    fd_z = open("data/angle.txt", O_CREAT);
-    close(fd_z);
-    chmod("data/angle.txt", S_IWUSR|S_IWGRP|S_IRUSR|S_IRGRP|S_IROTH|S_IWOTH);
+    fd_1 = open("data/flux.txt", O_CREAT);
+    close(fd_1);
+    chmod("data/flux.txt", S_IWUSR|S_IWGRP|S_IRUSR|S_IRGRP|S_IROTH|S_IWOTH);
+    fd_2 = open("data/u_flux.txt", O_CREAT);
+    close(fd_2);
+    chmod("data/u_flux.txt", S_IWUSR|S_IWGRP|S_IRUSR|S_IRGRP|S_IROTH|S_IWOTH);
 
-    fd_x = open("data/move.txt", O_WRONLY);
-    fd_z = open("data/angle.txt", O_WRONLY);
+    fd_1 = open("data/flux.txt", O_WRONLY);
+    fd_2 = open("data/u_flux.txt", O_WRONLY);
 	while (get_next_line(fd, &line))
 	{
 		if (start)
@@ -40,8 +40,8 @@ int main()
 		line = NULL;
 	}
     close(fd);
-    close(fd_x);
-    close(fd_z);
+    close(fd_1);
+    close(fd_2);
 	return (0);
 }
 
@@ -56,7 +56,6 @@ void filterUpdate(float w_x, float w_y, float w_z, float a_x, float a_y, float a
     J_41, J_42, J_43, J_44, J_51, J_52, J_53, J_54, J_61, J_62, J_63, J_64; //
     float SEqHatDot_1, SEqHatDot_2, SEqHatDot_3, SEqHatDot_4; // estimated direction of the gyroscope error
     float w_err_x, w_err_y, w_err_z; // estimated direction of the gyroscope error (angular)
-    float h_x, h_y, h_z; // computed flux in the earth frame
     // axulirary variables to avoid reapeated calcualtions
     float halfSEq_1 = 0.5f * SEq_1;
     float halfSEq_2 = 0.5f * SEq_2;
@@ -175,9 +174,9 @@ void filterUpdate(float w_x, float w_y, float w_z, float a_x, float a_y, float a
 
 void write_to_files()
 {
-    //printf("z = %f\n", b_z);
-    dprintf(fd_z, "%f ", b_z);
+    //flux
+    dprintf(fd_1, "%f %f %f\n", h_x, h_y, h_z);
 
-    //printf("x = %f\n\n", b_x);
-    dprintf(fd_x, "%f ", b_x);
+    //normalised flux
+    dprintf(fd_2, "%f %f\n", b_x, b_z);
 }

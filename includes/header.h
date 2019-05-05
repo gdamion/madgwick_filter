@@ -23,11 +23,12 @@ float a_x, a_y, a_z; // accelerometer measurements
 float w_x, w_y, w_z; // gyroscope measurements in rad/s
 float m_x, m_y, m_z; // magnetometer measurements
 float SEq_1 = 1, SEq_2 = 0, SEq_3 = 0, SEq_4 = 0; // estimated orientation quaternion elements with initial conditions
+float h_x, h_y, h_z; // computed flux in the earth frame
 float b_x = 1, b_z = 0; // reference direction of flux in earth frame
 float w_bx = 0, w_by = 0, w_bz = 0; // estimate gyroscope biases error
 
-int fd_x;
-int fd_z;
+int fd_1;
+int fd_2;
 
 void filterUpdate(float w_x, float w_y, float w_z, float a_x, float a_y, float a_z, float m_x, float m_y, float m_z);
 void write_to_files();

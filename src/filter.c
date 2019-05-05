@@ -176,8 +176,8 @@ void filterUpdate(float w_x, float w_y, float w_z, float a_x, float a_y, float a
 void write_to_files()
 {
     //printf("z = %f\n", b_z);
-    dprintf(fd_z, "%f\n", b_z);
+    dprintf(fd_z, "%f ", b_z);
 
     //printf("x = %f\n\n", b_x);
-    dprintf(fd_x, "%f\n", b_x);
+    dprintf(fd_x, "%f ", b_x);
 }
